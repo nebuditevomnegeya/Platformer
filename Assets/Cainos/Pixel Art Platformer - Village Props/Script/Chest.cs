@@ -1,37 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cainos.LucidEditor;
 
-namespace Cainos.PixelArtPlatformer_VillageProps
+public class Chest : MonoBehaviour
 {
-    public class Chest : MonoBehaviour
+    private GameObject Spawner;
+
+    
+    public void OnTriggerEnter2D(Collider2D obj_colider)
     {
-        [FoldoutGroup("Reference")]
-        public Animator animator;
-
-        [FoldoutGroup("Runtime"), ShowInInspector, DisableInEditMode]
-        public bool IsOpened
+        if(obj_colider.gameObject.CompareTag("Player")|| obj_colider.gameObject.CompareTag("Collider"))
         {
-            get { return isOpened; }
-            set
-            {
-                isOpened = value;
-                animator.SetBool("IsOpened", isOpened);
-            }
+            Destroy(gameObject);
+            Spawner.GetComponent<ChestSpawner>().jewelcount++;
         }
-        private bool isOpened;
+    }
+        
+    
 
-        [FoldoutGroup("Runtime"),Button("Open"), HorizontalGroup("Runtime/Button")]
-        public void Open()
-        {
-            IsOpened = true;
-        }
-
-        [FoldoutGroup("Runtime"), Button("Close"), HorizontalGroup("Runtime/Button")]
-        public void Close()
-        {
-            IsOpened = false;
-        }
+    void Start()
+    {
+        Spawner = GameObject.Find("ChestSpawner");
+    }
+ 
+    void Update()
+    {
+        
     }
 }
